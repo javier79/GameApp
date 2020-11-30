@@ -11,9 +11,13 @@ import SpriteKit
 
 class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
-    override func didMove(to view: SKView) {//Present object in a SKView
+    let catNode = SKSpriteNode(imageNamed: "cat")//instancing a node named "cat"
     
-        self.backgroundColor = .red//display red as background color
+    override func didMove(to view: SKView) {//Present object in a SKView
+        
+        catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
+        catNode.setScale(2.0)//setting the size(property)
+        addChild(catNode)//adding node, it is a child of SKScene wich is also a node
         
     }
 }
