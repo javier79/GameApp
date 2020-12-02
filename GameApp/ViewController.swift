@@ -9,10 +9,10 @@
 import UIKit
 import SpriteKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController {//default
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidLoad() {//default
+        super.viewDidLoad()//default
         
         let gameScene = GameScene(size: view.bounds.size)/*GameScene() call object size to be same as the view and assigned to*/
         
