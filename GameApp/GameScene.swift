@@ -17,7 +17,7 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     override func didMove(to view: SKView) {//Present object in a SKView
         
         catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
-        catNode.setScale(2.0)//setting the size(property)
+        catNode.setScale(0.8)//setting the size(property)
         catNode.zPosition = 1//z position from nearer to farther(cat in front of background)
         addChild(catNode)//adding node, it is a child of SKScene wich is also a node
         
@@ -25,5 +25,19 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         bgNode.zPosition = 0
         addChild(bgNode)//z position from nearer to farther(background farther than cat)
         
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {/*the parameter passed touches: Set<UITouch> allows an array to store our touch
+          with event: UIEvent? allows for the functiolnality to define an interaction
+         between an user and the app**/
+        
+        let touch = touches.first//from collection grab first element
+        if let location = touch?.location(in: self){/*returns the coordinate system of the location that was touch. we use IF as this location is
+            optional(as per tutorial)**/
+            
+            catNode.position.x = location.x/*moves catNode position on x axis
+             from it's position to the coordinates on x axis stored in location*/
+            
+        }
     }
 }
