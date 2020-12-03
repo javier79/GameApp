@@ -16,16 +16,36 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
     override func didMove(to view: SKView) {//Present object in a SKView
         
+        addCat()
+        addBackground()
+        addBall()
+        
+    }
+    
+    func addBall(){
+        let ball = SKSpriteNode(imageNamed: "red-ball")
+        ball.position = CGPoint(x: self.size.width/2, y:self.size.height)/*point of origin:on x axis half the wide of view and on y axis the height of the view this equals the coordinates for the center top of the view**/
+        ball.setScale(0.3)/*due default size was too big, we use this line to shrink the ball*/
+        addChild(ball)
+        
+        let moveAction = SKAction.moveTo(y: 0, duration: 5)/*from positioning in
+         top-center of the view to 0 in y axis, for a duration of 5 secs **/
+        ball.run(moveAction)//execute action defined on line before
+    }
+    
+    func addCat(){
         catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
         catNode.setScale(0.8)//setting the size(property)
         catNode.zPosition = 1//z position from nearer to farther(cat in front of background)
         addChild(catNode)//adding node, it is a child of SKScene wich is also a node
-        
+    }
+    
+    func addBackground(){
         bgNode.anchorPoint = CGPoint.zero
         bgNode.zPosition = 0
         addChild(bgNode)//z position from nearer to farther(background farther than cat)
-        
     }
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {/*the parameter passed touches: Set<UITouch> allows an array to store our touch
           with event: UIEvent? allows for the functiolnality to define an interaction
