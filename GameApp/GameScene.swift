@@ -30,7 +30,12 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         
         let moveAction = SKAction.moveTo(y: 0, duration: 5)/*from positioning in
          top-center of the view to 0 in y axis, for a duration of 5 secs **/
-        ball.run(moveAction)//execute action defined on line before
+        
+        let deleteAction = SKAction.removeFromParent()/*deletes node **/
+        
+        let scaleAction = SKAction.scale(by: 0.5, duration: 1)//red-ball shrink
+        
+        ball.run(SKAction.sequence([moveAction, scaleAction, deleteAction]))/*function provide an array to execute both defined actions above one after the other(sequence action)*/
     }
     
     func addCat(){
@@ -45,6 +50,10 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         bgNode.zPosition = 0
         addChild(bgNode)//z position from nearer to farther(background farther than cat)
     }
+    
+    /*override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {/* whenever there is a new touch on the screen the code below will execute **/
+        addBall()
+    }*/
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {/*the parameter passed touches: Set<UITouch> allows an array to store our touch
