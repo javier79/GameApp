@@ -25,8 +25,15 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     }
     
     @objc func addBall(){//@objc is cause of #selector function above
+        
+        let randomX = arc4random_uniform(UInt32(self.size.width))/*provides a random number that ranges from 0 to the widest value of the view on x axis(upper bound)**/
+        
         let ball = SKSpriteNode(imageNamed: "red-ball")
-        ball.position = CGPoint(x: self.size.width/2, y:self.size.height)/*point of origin:on x axis half the wide of view and on y axis the height of the view this equals the coordinates for the center top of the view**/
+        ball.position.y = self.size.height//this remain the same
+        ball.position.x = CGFloat(randomX)/*random number to generate point of origin of the ball on x axis. zdue randomX is of type UInt32 and position only accepts CGFloat we are casting to that type*/
+        
+        /*ball.position = CGPoint(x: self.size.width/2, y:self.size.height)point of origin:on x axis half the wide of view and on y axis the height of the view this equals the coordinates for the center top of the view**/
+        
         ball.setScale(0.3)/*due default size was too big, we use this line to shrink the ball*/
         addChild(ball)
         
