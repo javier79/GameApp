@@ -13,6 +13,7 @@
 		8D351F2C2571909000528102 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D351F2A2571909000528102 /* Main.storyboard */; };
 		8D351F2E2571909100528102 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D351F2D2571909100528102 /* Assets.xcassets */; };
 		8D351F312571909100528102 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D351F2F2571909100528102 /* LaunchScreen.storyboard */; };
+		8D377ACE257BEF0F00DEEE89 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D377ACD257BEF0F00DEEE89 /* StartScene.swift */; };
 		8D8185F725753E0900C68542 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D8185F625753E0900C68542 /* GameScene.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		8D351F2D2571909100528102 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D351F302571909100528102 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D351F322571909100528102 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D377ACD257BEF0F00DEEE89 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
 		8D8185F625753E0900C68542 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				8D351F2F2571909100528102 /* LaunchScreen.storyboard */,
 				8D351F322571909100528102 /* Info.plist */,
 				8D8185F625753E0900C68542 /* GameScene.swift */,
+				8D377ACD257BEF0F00DEEE89 /* StartScene.swift */,
 			);
 			path = GameApp;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				8D351F292571909000528102 /* ViewController.swift in Sources */,
 				8D351F252571909000528102 /* AppDelegate.swift in Sources */,
 				8D8185F725753E0900C68542 /* GameScene.swift in Sources */,
+				8D377ACE257BEF0F00DEEE89 /* StartScene.swift in Sources */,
 				8D351F272571909000528102 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
