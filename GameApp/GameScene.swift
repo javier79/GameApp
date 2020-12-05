@@ -13,16 +13,18 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing a node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
+    var timer = Timer()/*a timer that fires after a certain time interval has elapsed, sending a specified message to a target object**/
     
     override func didMove(to view: SKView) {//Present object in a SKView
-        
+        //execute addBall() every two seconds on GameScene(self)
+        timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
         addBackground()
-        addBall()
+        
         
     }
     
-    func addBall(){
+    @objc func addBall(){//@objc is cause of #selector function above
         let ball = SKSpriteNode(imageNamed: "red-ball")
         ball.position = CGPoint(x: self.size.width/2, y:self.size.height)/*point of origin:on x axis half the wide of view and on y axis the height of the view this equals the coordinates for the center top of the view**/
         ball.setScale(0.3)/*due default size was too big, we use this line to shrink the ball*/
