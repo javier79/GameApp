@@ -14,8 +14,10 @@ class GameOverScene : SKScene{
     let gameOverLabel = SKLabelNode(text: "Game Over")
     
     override func didMove(to view: SKView) {
+        /*properties and execution of a Game Over Label in the middle of view**/
+        self.backgroundColor = .orange
         
-        gameOverLabel.fontColor = SKColor.white
+        gameOverLabel.fontColor = SKColor.black
         gameOverLabel.fontName =  "helvetica"
         gameOverLabel.fontSize = 40
         gameOverLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2 )
