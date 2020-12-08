@@ -65,10 +65,21 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
     
     func addCat(){
-        catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
+        
+        //catNode.anchorPoint = CGPoint.zero
+        catNode.position = CGPoint(x: catNode.size.width/2, y: catNode.size.height/2)
+        /*this positioning above is with respect to it's own container the effect
+         is that the SKPhysicsBody now looks aligned with the cat
+         and not sideways as when we defined instead catNode anchor point(above in comments))**/
+        //catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
         catNode.setScale(0.8)//setting the size(property)
         catNode.zPosition = 1//z position from nearer to farther(cat in front of background)
         catNode.physicsBody = SKPhysicsBody(rectangleOf: catNode.size)/*we are employing a rectangle shape the size of our catNode**/
+        catNode.physicsBody?.affectedByGravity = false
+        /*by default gravity takes effect over our nodes when a SKPhysicsBody is instantiated for our nodes, for our
+            cat to stay at the bottom of the view we must override the property with this line*/
+        catNode.physicsBody?.isDynamic = false/*this will disable gravite effect, friction and collision with other objects, in our case the cat is not affected when interacts with ball but, the ball due its dynamic property is true by default when accquire a SKPhysicsBody it will be affected when in contact with cat*/
+ 
         addChild(catNode)//adding node, it is a child of SKScene wich is also a node
     }
     
