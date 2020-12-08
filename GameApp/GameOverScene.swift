@@ -27,6 +27,7 @@ class GameOverScene : SKScene{
         
         playButton.setScale(0.5)//scaling down size from default size
         playButton.position = CGPoint(x: self.size.width/2, y:self.size.height/4)/*positioning for start button at half the width of scene size and one fourth of the height of the scene or bottom center**/
+
         addChild(playButton)
     }
     

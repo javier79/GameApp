@@ -20,7 +20,7 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         //execute addBall() every two seconds on GameScene(self)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
-        addBackground()
+        //addBackground()
         
         
     }
@@ -38,6 +38,7 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         /*ball.position = CGPoint(x: self.size.width/2, y:self.size.height)point of origin:on x axis half the wide of view and on y axis the height of the view this equals the coordinates for the center top of the view**/
         
         ball.setScale(0.3)/*due default size was too big, we use this line to shrink the ball*/
+        ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2 + 5)/*Physics body definition with size(ball.size.width/2, this is a formula for the radius of our ball so that the SKPhysics body have the same dimentions(radius)) and shape to "wrap" a ball*/
         addChild(ball)
         
         let moveAction = SKAction.moveTo(y: 0, duration: 5)/*from positioning in
@@ -67,6 +68,7 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         catNode.anchorPoint = CGPoint.zero//setting node position(property) on screen
         catNode.setScale(0.8)//setting the size(property)
         catNode.zPosition = 1//z position from nearer to farther(cat in front of background)
+        catNode.physicsBody = SKPhysicsBody(rectangleOf: catNode.size)/*we are employing a rectangle shape the size of our catNode**/
         addChild(catNode)//adding node, it is a child of SKScene wich is also a node
     }
     
