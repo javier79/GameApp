@@ -50,6 +50,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
             contact between the two which calls function didBegin()
             that will execute message in terminal. **/
         
+        ball.name = "ball"
+        
         addChild(ball)
         
         let moveAction = SKAction.moveTo(y: 0, duration: 5)/*from positioning in
@@ -90,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         /*by default gravity takes effect over our nodes when a SKPhysicsBody is instantiated for our nodes, for our
             cat to stay at the bottom of the view we must override the property with this line*/
         catNode.physicsBody?.isDynamic = false/*this will disable gravite effect, friction and collision with other objects, in our case the cat is not affected when interacts with ball but, the ball due its dynamic property is true by default when accquire a SKPhysicsBody it will be affected when in contact with cat*/
- 
+        catNode.name = "cat"
         addChild(catNode)//adding node, it is a child of SKScene wich is also a node
     }
     
@@ -120,6 +122,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     }
     /*function below is called whenever there is contact between two SKPhisics bodies**/
     func didBegin(_ contact: SKPhysicsContact) {
-        print("cat and ball contacted")
+        //print("cat and ball contacted")
+        
+        
+        /*variables bodyA and bodyB are properties of SKPhysicsContact when two nodes(physics bodies) come into contact swift assign to each node one of this variables anyone of the two. Due in our case we only want eliminate the ball and that bodyA/bodyB are assigned automathically, the code below allows to determine which var contains the ball  **/
+        
+        /*guard keyword manages when we might receive a null value
+         from the else clause, thats my understanding at the time**/
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        if nodeA.name == "ball"{
+            nodeA.removeFromParent()
+        }else if nodeB.name == "ball"{
+            nodeB.removeFromParent()
+        
+        }
     }
 }
