@@ -9,7 +9,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
+class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass of SKScene class*/
     
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing a node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
@@ -18,6 +18,9 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
     override func didMove(to view: SKView) {//Present object in a SKView
         //execute addBall() every two seconds on GameScene(self)
+        
+        physicsWorld.contactDelegate = self/*protocol implementation to display notifications when catNode and ball get in contact**/
+        
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
         //addBackground()
@@ -27,7 +30,9 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
     
     @objc func addBall(){//@objc is cause of #selector function above
         
-        gameTime += 1//counts til 10
+        gameTime += 1/*counts til 10, GameScene would last 10 secs before
+         GameOverScene is rendered*/
+        
         
         let randomX = arc4random_uniform(UInt32(self.size.width))/*provides a random number that ranges from 0 to the widest value of the view on x axis(upper bound)**/
         
@@ -39,6 +44,12 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
         
         ball.setScale(0.3)/*due default size was too big, we use this line to shrink the ball*/
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width/2 + 5)/*Physics body definition with size(ball.size.width/2, this is a formula for the radius of our ball so that the SKPhysics body have the same dimentions(radius)) and shape to "wrap" a ball*/
+        ball.physicsBody?.contactTestBitMask = (ball.physicsBody?.collisionBitMask)!/*setting contactTestBitMask. Due collisionBitMask is set by default in our case allowing for ball to have properties of collision when in contact with cat, it sets contactTestBitMask
+            when collisionBitMask returns that ball and cat have come to collide with
+            each other, which contactTestBitMask ackowledge's as the ocurrence of
+            contact between the two which calls function didBegin()
+            that will execute message in terminal. **/
+        
         addChild(ball)
         
         let moveAction = SKAction.moveTo(y: 0, duration: 5)/*from positioning in
@@ -106,5 +117,9 @@ class GameScene: SKScene{/*object GameScene a subclass of SKScene class*/
              from it's position to the coordinates on x axis stored in location*/
             
         }
+    }
+    /*function below is called whenever there is contact between two SKPhisics bodies**/
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("cat and ball contacted")
     }
 }
