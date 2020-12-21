@@ -15,6 +15,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     var audioPlayer = AVAudioPlayer()
     var gameSoundURL: URL?//URL? means that url is optional by now
     
+    var musicPlayer = AVAudioPlayer()
+    var musicURL: URL?
+    
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing object node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
     let scoreLabel = SKLabelNode(text: "0")//instancing object node of type label
@@ -27,13 +30,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         physicsWorld.contactDelegate = self/*protocol implementation to display notifications when catNode and ball get in contact**/
         
-        gameSoundURL = Bundle.main.url(forResource: "sound", withExtension: "mp3")/*setting up sound file URL**/
+        gameSoundURL = Bundle.main.url(forResource: "sound", withExtension: "mp3")/*setting up collision sound file URL**/
+                
+        musicURL = Bundle.main.url(forResource: "music", withExtension: "mp3")/*setting up backgrund music file URL**/
+        
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
         //addBackground()
         addScoreLabel()
         initSound()
+        initMusic()
     }
     
     func initSound() {
@@ -47,6 +54,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         audioPlayer.numberOfLoops = 1//times it will play
         audioPlayer.prepareToPlay()//ready to play audioPlayer
+    }
+    
+    func initMusic() {
+        guard let url = musicURL else { return }
+        
+        do{
+            musicPlayer = try AVAudioPlayer(contentsOf: url)/*exe what is inside url**/
+        }catch{
+            print("error")
+            }
+        
+        musicPlayer.numberOfLoops = -1/*negative numbers will make it loop continuously until stopped*/
+        musicPlayer.prepareToPlay()//ready to play musicPlayer
+        musicPlayer.play()//
     }
     
     //setting label(scoreLabel) attributes and adding object(scoreLabel) to GameScene
