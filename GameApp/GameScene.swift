@@ -11,10 +11,12 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass of SKScene class*/
     
-    let catNode = SKSpriteNode(imageNamed: "cat")//instancing a node image named "cat"
+    let catNode = SKSpriteNode(imageNamed: "cat")//instancing object node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
+    let scoreLabel = SKLabelNode(text: "0")//instancing object node of type label
     var timer = Timer()/*a timer that fires after a certain time interval has elapsed, sending a specified message to a target object**/
     var gameTime = 0//temporary counter
+    var scores = 0
     
     override func didMove(to view: SKView) {//Present object in a SKView
         //execute addBall() every two seconds on GameScene(self)
@@ -24,8 +26,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
         //addBackground()
+        addScoreLabel()
         
         
+    }
+    //setting label(scoreLabel) attributes and adding object(scoreLabel) to GameScene
+    func addScoreLabel() {
+        scoreLabel.fontColor = .white
+        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        addChild(scoreLabel)
     }
     
     @objc func addBall(){//@objc is cause of #selector function above
@@ -136,7 +145,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
             nodeA.removeFromParent()
         }else if nodeB.name == "ball"{
             nodeB.removeFromParent()
-        
         }
+        
+        scores += 1
+        scoreLabel.text = "\(scores)"
     }
 }
