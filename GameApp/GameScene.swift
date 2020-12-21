@@ -8,8 +8,12 @@
 
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass of SKScene class*/
+    
+    var audioPlayer = AVAudioPlayer()
+    var gameSoundURL: URL?//URL? means that url is optional by now
     
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing object node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
@@ -23,13 +27,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         physicsWorld.contactDelegate = self/*protocol implementation to display notifications when catNode and ball get in contact**/
         
+        gameSoundURL = Bundle.main.url(forResource: "sound", withExtension: "mp3")/*setting up sound file URL**/
+        
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(addBall), userInfo: nil, repeats: true)//nil means we are not passing user info.
         addCat()
         //addBackground()
         addScoreLabel()
-        
-        
+        initSound()
     }
+    
+    func initSound() {
+        guard let url = gameSoundURL else { return }
+        
+        do{
+            audioPlayer = try AVAudioPlayer(contentsOf: url)/*exe what is inside url**/
+        }catch{
+            print("error")
+            }
+        
+        audioPlayer.numberOfLoops = 1//times it will play
+        audioPlayer.prepareToPlay()//ready to play audioPlayer
+    }
+    
     //setting label(scoreLabel) attributes and adding object(scoreLabel) to GameScene
     func addScoreLabel() {
         scoreLabel.fontColor = .white
@@ -133,6 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     func didBegin(_ contact: SKPhysicsContact) {
         //print("cat and ball contacted")
         
+        audioPlayer.play()//plays when there is contact between cat and ball
         
         /*variables bodyA and bodyB are properties of SKPhysicsContact when two nodes(physics bodies) come into contact swift assign to each node one of this variables anyone of the two. Due in our case we only want eliminate the ball and that bodyA/bodyB are assigned automathically, the code below allows to determine which var contains the ball  **/
         
