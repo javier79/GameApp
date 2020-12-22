@@ -21,6 +21,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing object node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
     let scoreLabel = SKLabelNode(text: "0")//instancing object node of type label
+    let playSoundNode = SKSpriteNode(imageNamed: "play")//references play image button
+    let stopSoundNode = SKSpriteNode(imageNamed: "stop")//references stop image button
+    
     var timer = Timer()/*a timer that fires after a certain time interval has elapsed, sending a specified message to a target object**/
     var gameTime = 0//temporary counter
     var scores = 0
@@ -41,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         addScoreLabel()
         initSound()
         initMusic()
+        addSoundNode()
     }
     
     func initSound() {
@@ -68,6 +72,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         musicPlayer.numberOfLoops = -1/*negative numbers will make it loop continuously until stopped*/
         musicPlayer.prepareToPlay()//ready to play musicPlayer
         musicPlayer.play()//
+    }
+    
+    func addSoundNode() {
+        playSoundNode.anchorPoint = CGPoint.zero
+        playSoundNode.position = CGPoint(x: 0, y: self.size.height -
+            playSoundNode.size.height)
+        playSoundNode.zPosition = 4
+        addChild(playSoundNode)
+        
+        stopSoundNode.anchorPoint = CGPoint.zero
+        stopSoundNode.position = CGPoint(x: 0, y: self.size.height -
+            stopSoundNode.size.height)
+        stopSoundNode.zPosition = 5
+        addChild(stopSoundNode)
+        
+        
     }
     
     //setting label(scoreLabel) attributes and adding object(scoreLabel) to GameScene
@@ -190,5 +210,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         scores += 1
         scoreLabel.text = "\(scores)"
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {/*this allows identify which node we have touched at a particular location and then perform some action**/
+        if let location = touches.first?.location(in: self){/*if a touch is registered on GameScene*/
+            
+            if atPoint(location) == stopSoundNode {
+                
+                stopSoundNode.zPosition = 4//goes to background on z axis
+                playSoundNode.zPosition = 5//goes on top on z axis
+                musicPlayer.pause()
+            }else if atPoint(location) == playSoundNode{
+                stopSoundNode.zPosition = 5
+                playSoundNode.zPosition = 4
+                musicPlayer.play()
+            }
+            
+            
+        }
     }
 }
