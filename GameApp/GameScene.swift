@@ -25,7 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     let stopSoundNode = SKSpriteNode(imageNamed: "stop")//references stop image button
     
     var timer = Timer()/*a timer that fires after a certain time interval has elapsed, sending a specified message to a target object**/
-    var gameTime = 0//temporary counter
+    //var gameTime = 0//temporary counter
     var scores = 0
     
     override func didMove(to view: SKView) {//Present object in a SKView
@@ -43,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         //addBackground()
         addScoreLabel()
         initSound()
-        initMusic()
+        //initMusic()
         addSoundNode()
     }
     
@@ -99,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     
     @objc func addBall(){//@objc is cause of #selector function above
         
-        gameTime += 1/*counts til 10, GameScene would last 10 secs before
+        /*gameTime += 1 counts til 10, GameScene would last 10 secs before
          GameOverScene is rendered*/
         
         
@@ -132,10 +132,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         ball.run(SKAction.sequence([moveAction, scaleAction, deleteAction]))/*function provide an array to execute both defined actions above one after the other(sequence action)*/
         
-        if gameTime > 10{
+        /*if gameTime > 10{
             timer.invalidate()//stop timer which contains addBall, so balls are stopped
             presentGameOverScene()//execute presentation of game  over scene
-        }
+       }*/
+        
     }
     
     func presentGameOverScene(){
@@ -226,6 +227,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
                 musicPlayer.play()
             }
             
+            
+        }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {/*this function is called in
+         every frame of the game, we will use to recognize when the ball has passed
+         below 0 on y axis(bottom of the screen)**/
+        
+        if let ball = self.childNode(withName: "ball") as? SKSpriteNode{/*optionally
+             catches  child node "ball" and we cast it as SKSpriteNode*/
+        
+            if ball.position.y < 0{//if in y axis ball location(position) is below 0
+                print("the ball is out of the bottom screen")
+                
+                timer.invalidate()//stop timer which contains addBall, so balls are stopped
+                presentGameOverScene()//execute presentation of game  over scene
+            }
             
         }
     }
