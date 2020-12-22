@@ -210,7 +210,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         }
         
         scores += 1
-        scoreLabel.text = "\(scores)"
+        scoreLabel.text = "\(scores)"//integer casting as string
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {/*this allows identify which node we have touched at a particular location and then perform some action**/
@@ -241,6 +241,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
             if ball.position.y < 0{//if in y axis ball location(position) is below 0
                 print("the ball is out of the bottom screen")
                 
+                UserDefaults.standard.set(scores, forKey: "scores")/*we are defining
+                 variable scores as an integer to store score values and the key
+                 name we assign is "scores". UserDefaults are meant to store small pieces of data which persist across app launches, as happens when we will show the scores at the start of the game**/
                 timer.invalidate()//stop timer which contains addBall, so balls are stopped
                 presentGameOverScene()//execute presentation of game  over scene
             }

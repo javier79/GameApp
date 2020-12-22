@@ -40,7 +40,21 @@ class StartScene: SKScene{
         playButton.position = CGPoint(x: self.size.width/2, y:self.size.height/4)/*positioning for start button at half the width of scene size and one fourth of the height of the scene or bottom center**/
         addChild(playButton)
         
+        addScoreLabel()
+        
         }
+    func addScoreLabel(){//
+        
+        let scoreLabel = SKLabelNode()
+        scoreLabel.fontSize = 30
+        scoreLabel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        scoreLabel.fontName = "Arial"
+        scoreLabel.fontColor = .black
+        addChild(scoreLabel)
+        
+        scoreLabel.text = "Last Score: \(UserDefaults.standard.integer(forKey: "scores"))"
+        /*line above set the text that will show the scores. We set the integer variable to store scores under the key "scores" in GameScene. Observe that due we use SKLabelNode() variable .text we needed to cast to string what returns (UserDefaults.standard.integer(forKey: "scores")) <- this is defined on GameScene.swift**/
+    }
         /*function below provides an array to store touches and the funtionality to describe an interaction between user and app**/
        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             
