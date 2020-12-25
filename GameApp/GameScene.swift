@@ -102,10 +102,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         /*gameTime += 1 counts til 10, GameScene would last 10 secs before
          GameOverScene is rendered*/
         
-        
+        let randomNumber = arc4random_uniform(UInt32(2))/*generates a random number in a range of 2(0 or 1) numbers**/
         let randomX = arc4random_uniform(UInt32(self.size.width))/*provides a random number that ranges from 0 to the widest value of the view on x axis(upper bound)**/
         
-        let ball = SKSpriteNode(imageNamed: "red-ball")
+        var ball = SKSpriteNode()
+        /*setting ball to red-ball or dangerball using a random numb**/
+        if randomNumber == 0{
+            ball = SKSpriteNode(imageNamed: "red-ball")
+            ball.name = "ball"
+        }else{
+            ball = SKSpriteNode(imageNamed: "dangerball")
+            ball.name = "dangerball"
+        }
+        
         ball.position.y = self.size.height//this remain the same
         ball.position.x = CGFloat(randomX)/*random number to generate point of origin of the ball on x axis. due randomX is of type UInt32 and position only accepts CGFloat we are casting to that type*/
         
@@ -119,7 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
             contact between the two which calls function didBegin()
             that will execute message in terminal. **/
         
-        ball.name = "ball"
+        
         
         addChild(ball)
         
