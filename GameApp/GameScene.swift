@@ -148,6 +148,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
     }
     
+    
+    func addBlink(node: SKSpriteNode){
+        
+        let fadeAction = SKAction.sequence([SKAction.fadeAlpha(to: 0.1, duration: 0.1), SKAction.fadeAlpha(to: 1.0, duration: 0.1)])/*on collision with danger ball catt will fade to 0.1 in 0.1secs and back to 1.0 in 0.1secs**/
+        
+        let repeatAction = SKAction.repeat(fadeAction, count: 10)/*repeat fadeAction(sequence) 10 times**/
+        
+        node.run(repeatAction)
+    }
+    
+    
     func presentGameOverScene(){
         
         let gameOverScene = GameOverScene(size: self.size)//definitio
@@ -204,6 +215,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         //print("cat and ball contacted")
         
         audioPlayer.play()//plays when there is contact between cat and ball
+        addBlink(node:catNode)/*applying blinking on cat node when it came in contact
+        with ball(any)*/
+        
         
         /*variables bodyA and bodyB are properties of SKPhysicsContact when two nodes(physics bodies) come into contact swift assign to each node one of this variables anyone of the two. Due in our case we only want eliminate the ball and that bodyA/bodyB are assigned automathically, the code below allows to determine which var contains the ball  **/
         
