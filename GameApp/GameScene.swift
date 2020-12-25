@@ -21,12 +21,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
     let catNode = SKSpriteNode(imageNamed: "cat")//instancing object node image named "cat"
     let bgNode = SKSpriteNode(imageNamed: "bg")
     let scoreLabel = SKLabelNode(text: "0")//instancing object node of type label
+    let liveLabel = SKLabelNode(text: "3")/*instancing object node of type label live count*/
     let playSoundNode = SKSpriteNode(imageNamed: "play")//references play image button
     let stopSoundNode = SKSpriteNode(imageNamed: "stop")//references stop image button
     
     var timer = Timer()/*a timer that fires after a certain time interval has elapsed, sending a specified message to a target object**/
     //var gameTime = 0//temporary counter
     var scores = 0
+    var lives = 3
     
     override func didMove(to view: SKView) {//Present object in a SKView
         //execute addBall() every two seconds on GameScene(self)
@@ -45,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         initSound()
         //initMusic()
         addSoundNode()
+        addLivesLabel()
     }
     
     func initSound() {
@@ -73,6 +76,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         musicPlayer.prepareToPlay()//ready to play musicPlayer
         musicPlayer.play()//
     }
+    
+    
+    func addLivesLabel(){
+        liveLabel.position = CGPoint(x:10, y: 5)
+        addChild(liveLabel)
+    }
+    
     
     func addSoundNode() {
         playSoundNode.anchorPoint = CGPoint.zero
@@ -215,8 +225,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         //print("cat and ball contacted")
         
         audioPlayer.play()//plays when there is contact between cat and ball
-        addBlink(node:catNode)/*applying blinking on cat node when it came in contact
-        with ball(any)*/
+        
         
         
         /*variables bodyA and bodyB are properties of SKPhysicsContact when two nodes(physics bodies) come into contact swift assign to each node one of this variables anyone of the two. Due in our case we only want eliminate the ball and that bodyA/bodyB are assigned automathically, the code below allows to determine which var contains the ball  **/
@@ -228,12 +237,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
         
         if nodeA.name == "ball"{
             nodeA.removeFromParent()
+            scores += 1
         }else if nodeB.name == "ball"{
             nodeB.removeFromParent()
+            scores += 1
+        }else if nodeA.name == "dangerball"{
+            //print(nodeB)
+            nodeB.removeFromParent()
+            addBlink(node: catNode)
+            lives -= 1
+        }else if nodeB.name == "dangerball"{
+            //print(nodeB)
+            nodeB.removeFromParent()
+            addBlink(node: catNode)
+            lives -= 1
         }
         
-        scores += 1
         scoreLabel.text = "\(scores)"//integer casting as string
+        liveLabel.text = "\(lives)"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {/*this allows identify which node we have touched at a particular location and then perform some action**/
