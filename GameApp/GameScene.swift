@@ -243,7 +243,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
             scores += 1
         }else if nodeA.name == "dangerball"{
             //print(nodeB)
-            nodeB.removeFromParent()
+            nodeA.removeFromParent()
             addBlink(node: catNode)
             lives -= 1
         }else if nodeB.name == "dangerball"{
@@ -279,19 +279,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate{/*object GameScene a subclass
          every frame of the game, we will use to recognize when the ball has passed
          below 0 on y axis(bottom of the screen)**/
         
+        if lives == 0{
+            endGame()
+        }
+        
         if let ball = self.childNode(withName: "ball") as? SKSpriteNode{/*optionally
              catches  child node "ball" and we cast it as SKSpriteNode*/
         
             if ball.position.y < 0{//if in y axis ball location(position) is below 0
-                print("the ball is out of the bottom screen")
                 
-                UserDefaults.standard.set(scores, forKey: "scores")/*we are defining
-                 variable scores as an integer to store score values and the key
-                 name we assign is "scores". UserDefaults are meant to store small pieces of data which persist across app launches, as happens when we will show the scores at the start of the game**/
-                timer.invalidate()//stop timer which contains addBall, so balls are stopped
-                presentGameOverScene()//execute presentation of game  over scene
+                endGame()
+                
+
             }
             
         }
+        if let ball = self.childNode(withName: "dangerball") as? SKSpriteNode{
+            
+            if ball.position.y < 0{
+                ball.removeFromParent()
+            }
+        }
+    }
+    
+    func endGame(){
+        UserDefaults.standard.set(scores, forKey: "scores")/*we are defining
+         variable scores as an integer to store score values and the key
+         name we assign is "scores". UserDefaults are meant to store small pieces of data which persist across app launches, as happens when we will show the scores at the start of the game**/
+        timer.invalidate()//stop timer which contains addBall, so balls are stopped
+        presentGameOverScene()//execute presentation of game  over scene
     }
 }
